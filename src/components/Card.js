@@ -34,7 +34,7 @@ class Card extends React.Component {
         <p data-testid="rare-card">
           { cardRare }
         </p>
-        { cardTrunfo && <p data-testid="trunfo-card"> Super Trundo </p>}
+        { cardTrunfo && <p data-testid="trunfo-card"> Super Trunfo </p>}
         {/* && significa verdadeiro de acordo com a documentação react (rederização condicional) */}
       </>
     );
