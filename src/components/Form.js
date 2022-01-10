@@ -12,78 +12,81 @@ class Form extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
-      // hasTrunfo
+      // hasTrunfo,
       isSaveButtonDisabled,
       onInputChange,
-      onSaveButtonClick,
-    } = this.props;
+      onSaveButtonClick } = this.props;
+
     return (
-      <section>
+      <div>
         <form>
-          Nome da carta:
-          <label htmlFor="name-input-one">
+          <label htmlFor="name-input">
+            Nome da carta:
             <input
-              id="name-input-one"
               type="text"
-              data-testid="name-input"
               name="cardName"
+              data-testid="name-input"
+              id="name-input"
               value={ cardName }
               onChange={ onInputChange }
             />
           </label>
-          Descrição dar carta:
-          <textarea
-            data-testid="description-input"
-            name="cardDescription"
-            value={ cardDescription }
-            onChange={ onInputChange }
-          />
-          Primeiro atributo da carta:
-          <label htmlFor="name-input-one">
+          <label htmlFor="description-input">
+            Descrição da carta:
+            <textarea
+              name="cardDescription"
+              data-testid="description-input"
+              id="description-input"
+              value={ cardDescription }
+              onChange={ onInputChange }
+            />
+          </label>
+          <label htmlFor="attr1-input">
+            Primeiro atributo da carta:
             <input
-              id="name-input-one"
               type="number"
-              data-testid="attr1-input"
               name="cardAttr1"
+              data-testid="attr1-input"
+              id="attr1-input"
               value={ cardAttr1 }
               onChange={ onInputChange }
             />
           </label>
-          Segundo atributo da carta:
-          <label htmlFor="name-input-one">
+          <label htmlFor="attr2-input">
+            Segundo atributo da carta:
             <input
-              id="name-input-one"
               type="number"
-              data-testid="attr2-input"
               name="cardAttr2"
+              data-testid="attr2-input"
+              id="attr2-input"
               value={ cardAttr2 }
               onChange={ onInputChange }
             />
           </label>
-          Terceiro atributo da carta:
-          <label htmlFor="name-input-one">
+          <label htmlFor="attr3-input">
+            terceiro atributo da carta:
             <input
-              id="name-input-one"
               type="number"
-              data-testid="attr3-input"
               name="cardAttr3"
+              data-testid="attr3-input"
+              id="attr3-input"
               value={ cardAttr3 }
               onChange={ onInputChange }
             />
           </label>
-          Caminho para a imagem:
-          <label htmlFor="name-input-one">
+          <label htmlFor="image-input">
+            Imagem da carta:
             <input
-              id="name-input-one"
               type="text"
-              data-testid="image-input"
               name="cardImage"
+              data-testid="image-input"
+              id="image-input"
               value={ cardImage }
-              oneChange={ onInputChange }
+              onChange={ onInputChange }
             />
           </label>
-          Escolha da raridade da carta:
           <label htmlFor="rare-input">
+            Cards raros:
             <select
               data-testid="rare-input"
               id="rare-input"
@@ -96,14 +99,14 @@ class Form extends React.Component {
               <option value="muito raro">muito raro</option>
             </select>
           </label>
-          Inserir se a carta é super triunfo:
-          <label htmlFor="name-input-one">
+          <label htmlFor="trunfo-input">
+            Super tryunfo:
             <input
-              id="name-input-one"
+              name="cardTrunfo"
               type="checkbox"
+              id="trunfo-input"
               data-testid="trunfo-input"
-              name="cardTryunfo"
-              value={ cardTrunfo }
+              checked={ cardTrunfo }
               onChange={ onInputChange }
             />
           </label>
@@ -116,10 +119,11 @@ class Form extends React.Component {
             Salvar
           </button>
         </form>
-      </section>
+      </div>
     );
   }
 }
+
 Form.propTypes = {
   cardName: PropTypes.string.isRequired,
   cardDescription: PropTypes.string.isRequired,
@@ -132,7 +136,6 @@ Form.propTypes = {
   // hasTrunfo: PropTypes.bool.isRequired,
   isSaveButtonDisabled: PropTypes.bool.isRequired,
   onInputChange: PropTypes.func.isRequired,
-  onSaveButtonClick: PropTypes.func.isRequired,
-};
+  onSaveButtonClick: PropTypes.func.isRequired };
 
 export default Form;
