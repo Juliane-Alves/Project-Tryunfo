@@ -24,7 +24,33 @@ class App extends React.Component {
   handleChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value,
-    });
+    }, this.handleButtonValition);
+  };
+
+  handleButtonValition = () => {
+    const {
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+    } = this.state;
+
+    const valueMaxInput = 90;
+    const noUltrapass = 210;
+    const checkButton = (
+      cardName !== ''
+      && cardDescription !== '' && cardImage !== ''
+      && cardRare !== '' && cardAttr1 !== ''
+      && cardAttr2 !== '' && cardAttr3 !== ''
+      && (Number(cardAttr1) >= 0 && Number(cardAttr1) <= valueMaxInput)
+      && (Number(cardAttr2) >= 0 && Number(cardAttr2) <= valueMaxInput)
+      && (Number(cardAttr3) >= 0 && Number(cardAttr3) <= valueMaxInput)
+      && Number(cardAttr1) + Number(cardAttr2) + Number(cardAttr3) <= noUltrapass
+    );
+    this.setState({ isSaveButtonDisabled: !checkButton });
   }
 
   render() {
