@@ -14,44 +14,20 @@ class App extends React.Component {
       cardAttr2: '0',
       cardAttr3: '0',
       cardImage: '',
-      cardRare: '',
+      cardRare: 'normal',
       cardTrunfo: false,
       hasTrunfo: false,
       isSaveButtonDisabled: true,
       arrayCards: [],
     };
+    this.saveCard = this.saveCard.bind(this);
   }
 
   handleInputChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value,
-    }, this.handleButtonValition);
-  };
-
-  handleButtonValition = () => {
-    const {
-      cardName,
-      cardDescription,
-      cardAttr1,
-      cardAttr2,
-      cardAttr3,
-      cardImage,
-      cardRare,
-    } = this.state;
-
-    const valueMaxInput = 90;
-    const noUltrapass = 210;
-    const checkButton = (
-      cardName !== ''
-      && cardDescription !== '' && cardImage !== ''
-      && cardRare !== '' && cardAttr1 !== ''
-      && cardAttr2 !== '' && cardAttr3 !== ''
-      && (Number(cardAttr1) >= 0 && Number(cardAttr1) <= valueMaxInput)
-      && (Number(cardAttr2) >= 0 && Number(cardAttr2) <= valueMaxInput)
-      && (Number(cardAttr3) >= 0 && Number(cardAttr3) <= valueMaxInput)
-      && Number(cardAttr1) + Number(cardAttr2) + Number(cardAttr3) <= noUltrapass
-    );
-    this.setState({ isSaveButtonDisabled: !checkButton });
+    },
+    this.validation);
   }
 
   saveCard() {
@@ -67,7 +43,6 @@ class App extends React.Component {
       cardTrunfo,
       hasTrunfo,
     } = this.state;
-
     const card = {
       cardName,
       cardDescription,
@@ -92,6 +67,40 @@ class App extends React.Component {
     });
   }
 
+  validation() {
+    const {
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+    } = this.state;
+
+    const maxSumAttr = 210;
+    const maxAttr = 90;
+    const noEmpty = [cardName, cardDescription, cardImage, cardRare];
+    const cardAtt = [cardAttr1, cardAttr2, cardAttr3];
+    const sumOfCardAtt = Number(cardAttr1) + Number(cardAttr2) + Number(cardAttr3);
+    const noEmptyAllowed = noEmpty.every((word) => word);
+    const noMaxAllowed = cardAtt.every((attr) => attr >= 0 && attr <= maxAttr);
+    const okForm = noEmptyAllowed && noMaxAllowed && sumOfCardAtt <= maxSumAttr;
+    this.setState({ isSaveButtonDisabled: !okForm });
+    // Função resolvida com a ajuda das colegas Nicole Calderari e Juliane Alves
+  }
+
+  cardRemove(name) {
+    const { arrayCards } = this.state;
+    const cardsList = arrayCards.filter(({ cardName }) => cardName !== name);
+    const trueTrunfo = cardsList.some(({ cardTrunfo }) => cardTrunfo);
+    this.setState(({
+      arrayCards: cardsList,
+      hasTrunfo: trueTrunfo,
+    }));
+    // Função resolvida com a ajuda das colegas Nicole Calderari e Matheus Alves;
+  }
+
   render() {
     const {
       cardName,
@@ -109,8 +118,9 @@ class App extends React.Component {
 
     return (
       <div>
-        <h1> Adicionar nova carta </h1>
+        <h1> Trunfo Super </h1>
         <section>
+          <h2> Adicionar nova carta </h2>
           <Form
             cardName={ cardName }
             cardDescription={ cardDescription }
@@ -122,12 +132,12 @@ class App extends React.Component {
             cardTrunfo={ cardTrunfo }
             hasTrunfo={ hasTrunfo }
             isSaveButtonDisabled={ isSaveButtonDisabled }
-            onSaveButtonClick={ this.saveCard }
             onInputChange={ this.handleInputChange }
+            onSaveButtonClick={ this.saveCard }
           />
         </section>
         <section>
-          <h2>Carta: </h2>
+          <h2>Carta:</h2>
           <Card
             cardName={ cardName }
             cardDescription={ cardDescription }
@@ -142,7 +152,7 @@ class App extends React.Component {
         <section>
           <h2>Lista de Cartas</h2>
           { arrayCards.map((card) => (
-            <div key={ card.cardName } className="card">
+            <div key={ card.cardName }>
               <Card
                 cardName={ card.cardName }
                 cardDescription={ card.cardDescription }
@@ -153,6 +163,13 @@ class App extends React.Component {
                 cardRare={ card.cardRare }
                 cardTrunfo={ card.cardTrunfo }
               />
+              <button
+                data-testid="delete-button"
+                onClick={ () => this.cardRemove(card.cardName) }
+                type="button"
+              >
+                Excluir
+              </button>
             </div>
           ))}
         </section>
@@ -160,5 +177,6 @@ class App extends React.Component {
     );
   }
 }
-
 export default App;
+
+// Nicole calderari e Matheus Alves ajudaram a buscar uma melhor logica//

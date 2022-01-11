@@ -11,13 +11,13 @@ class Card extends React.Component {
       cardAttr3,
       cardImage,
       cardRare,
-      cardTrunfo,
-    } = this.props;
+      cardTrunfo } = this.props;
+
     return (
       <>
-        <h2 data-testid="name-card">
+        <h3 data-testid="name-card">
           { cardName }
-        </h2>
+        </h3>
         <img src={ cardImage } alt={ cardName } data-testid="image-card" />
         <p data-testid="description-card">
           { cardDescription }
@@ -34,12 +34,14 @@ class Card extends React.Component {
         <p data-testid="rare-card">
           { cardRare }
         </p>
-        { cardTrunfo && <p data-testid="trunfo-card"> Super Trunfo </p>}
-        {/* && significa verdadeiro de acordo com a documentação react (rederização condicional) */}
+        {cardTrunfo && <p data-testid="trunfo-card">Super Trunfo</p>}
+        {/* Aqui existe uma verificação usada de acordo com a documentação do react */}
       </>
+
     );
   }
 }
+
 Card.propTypes = {
   cardName: PropTypes.string.isRequired,
   cardDescription: PropTypes.string.isRequired,
