@@ -18,10 +18,11 @@ class App extends React.Component {
       cardTrunfo: false,
       hasTrunfo: false,
       isSaveButtonDisabled: true,
+      arrayCards: [],
     };
   }
 
-  handleChange = ({ target: { name, value } }) => {
+  handleInputChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value,
     }, this.handleButtonValition);
@@ -53,6 +54,44 @@ class App extends React.Component {
     this.setState({ isSaveButtonDisabled: !checkButton });
   }
 
+  saveCard() {
+    const {
+      arrayCards,
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo,
+      hasTrunfo,
+    } = this.state;
+
+    const card = {
+      cardName,
+      cardDescription,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardImage,
+      cardRare,
+      cardTrunfo,
+    };
+    this.setState({
+      arrayCards: [...arrayCards, card],
+      cardName: '',
+      cardDescription: '',
+      cardAttr1: '0',
+      cardAttr2: '0',
+      cardAttr3: '0',
+      cardImage: '',
+      cardRare: 'normal',
+      cardTrunfo: false,
+      hasTrunfo: cardTrunfo || hasTrunfo,
+    });
+  }
+
   render() {
     const {
       cardName,
@@ -81,7 +120,8 @@ class App extends React.Component {
           cardTrunfo={ cardTrunfo }
           hasTrunfo={ hasTrunfo }
           isSaveButtonDisabled={ isSaveButtonDisabled }
-          onInputChange={ this.handleChange }
+          onSaveButtonClick={ this.saveCard }
+          onInputChange={ this.handleInputChange }
         />
         <h2>Carta: </h2>
         <Card
