@@ -104,6 +104,7 @@ class App extends React.Component {
       cardTrunfo,
       hasTrunfo,
       isSaveButtonDisabled,
+      arrayCards,
     } = this.state;
 
     return (
